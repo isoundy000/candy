@@ -1,17 +1,11 @@
 var DataLayer = cc.Layer.extend({
     playScene: null,
 
-    levelLabel: null,
+    levelText: 1,
 
-    scoreLabel: null,
+    scoreText: 1,
 
-    stepLabel: null,
-
-    level: 1,
-
-    score: 1,
-
-    step: 1,
+    stepText: 1,
 
     ctor: function (playScene) {
         this._super();
@@ -19,6 +13,8 @@ var DataLayer = cc.Layer.extend({
         this.playScene = playScene;
 
         this.init();
+
+        this.scheduleUpdate();
     },
 
     init: function () {
@@ -30,7 +26,7 @@ var DataLayer = cc.Layer.extend({
         levelLabel.attr({
             x: 100,
             y: size.height - 30,
-            color: new cc.Color(80, 80, 80)
+            color: cc.color(80, 80, 80)
         });
         this.addChild(levelLabel);
 
@@ -38,7 +34,7 @@ var DataLayer = cc.Layer.extend({
         scoreLabel.attr({
             x: size.width / 2,
             y: size.height - 30,
-            color: new cc.Color(80, 80, 80)
+            color: cc.color(80, 80, 80)
         });
         this.addChild(scoreLabel);
 
@@ -46,32 +42,41 @@ var DataLayer = cc.Layer.extend({
         stepLabel.attr({
             x: size.width - 100,
             y: size.height - 30,
-            color: new cc.Color(80, 80, 80)
+            color: cc.color(80, 80, 80)
         });
         this.addChild(stepLabel);
 
-        var level = new cc.LabelTTF(this.level, 'Microsoft YaHei', 24);
-        level.attr({
+        var levelText = new cc.LabelTTF(this.playScene.level, 'Microsoft YaHei', 24);
+        levelText.attr({
             x: 100,
             y: size.height - 60,
-            color: new cc.Color(0, 0, 0)
+            color: cc.color(0, 0, 0)
         });
-        this.addChild(level);
+        this.addChild(levelText);
+        this.levelText = levelText;
 
-        var score = new cc.LabelTTF(this.score, 'Microsoft YaHei', 24);
-        score.attr({
+        var scoreText = new cc.LabelTTF(this.playScene.score, 'Microsoft YaHei', 24);
+        scoreText.attr({
             x: size.width / 2,
             y: size.height - 60,
-            color: new cc.Color(0, 0, 0)
+            color: cc.color(0, 0, 0)
         });
-        this.addChild(score);
+        this.addChild(scoreText);
+        this.scoreText = scoreText;
 
-        var step = new cc.LabelTTF(this.step, 'Microsoft YaHei', 24);
-        step.attr({
+        var stepText = new cc.LabelTTF(this.playScene.step, 'Microsoft YaHei', 24);
+        stepText.attr({
             x: size.width - 100,
             y: size.height - 60,
-            color: new cc.Color(0, 0, 0)
+            color: cc.color(0, 0, 0)
         });
-        this.addChild(step);
+        this.addChild(stepText);
+        this.stepText = stepText;
+    },
+
+    update: function (dt) {
+        this.levelText.setString(this.playScene.level);
+        this.scoreText.setString(this.playScene.score);
+        this.stepText.setString(this.playScene.step);
     }
 });
